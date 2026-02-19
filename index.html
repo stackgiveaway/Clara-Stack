@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clara Stack Scenepack</title>
+<style>
+    body {
+        background: #000;
+        overflow: hidden; 
+        position: relative;
+        font-family: 'Space Mono', monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    #loader {
+  position: fixed;
+  inset: 0;
+  background-size: 3px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #7C01CA, #3000FF, #FF7200, #FCFF00, #05B1EA);
+  animation: spin 2s infinite ease-in-out;
+  mask: radial-gradient(circle at center, transparent 40%, black 41%);
+  -webkit-mask: radial-gradient(circle at center, transparent 40%, black 41%);
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  color: white;
+  font-family: sans-serif;
+  animation: pulseText 1.8s infinite ease-in-out;
+  text-align: center;
+}
+
+@keyframes pulseText {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  50%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1);   opacity: 0.6; }
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg);   animation-timing-function: ease-in; }
+  50%  { transform: rotate(720deg); animation-timing-function: ease-out; }
+  100% { transform: rotate(1440deg);}
+}
+
+    .moo-card {
+        width: 330px;
+        padding: 25px;
+        z-index: 100;
+        border-radius: 18px;
+        background: rgba(20, 20, 20, 0.85);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+        color: white;
+        text-align: center; /* CENTRADO */
+        transition: 0.3s ease;
+    }
+    .moo-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 35px rgba(255, 255, 255, 0.15);
+    }
+    .moo-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+        border: 3px solid #86236C;
+        box-shadow: 0 0 12px rgba(199, 21, 134, 0.4);
+    }
+
+    .moo-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .moo-text {
+        left: 0;
+        font-size: 14px;
+        opacity: 0.8;
+        margin-bottom: 20px;
+        line-height: 1.4em;
+    }
+    .moo-btn {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, #FF1493, #A24890);
+        border-radius: 10px;
+        color: white;
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 0 12px rgba(199, 21, 134, 0.4);
+        transition: 0.25s ease;
+    }
+    .moo-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 16px rgba(199, 21, 134, 0.4);
+    }
+  #star-container {
+    position: fixed;
+    font-size: 70px;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+    p {
+        font-size: 15px;
+        color: white;
+    }
+</style>
+</head>
+<body>
+    <div id="loader">
+  <div class="loader-inner">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading...</p>
+  </div>
+</div>
+<div id="star-container"></div>
+<div id="contentpage" style="display: none;">
+<div class="moo-card">
+    <img class="moo-photo" src="photo.jpg" alt="Foto">
+    <div class="moo-title">Clara Stack Scenepack</div>
+    <div class="moo-text">
+        <p><b>This Pack Incluide:</p>
+    50+ Clara Pictures Remasterized.
+    Gettyimages Photos And Videos (Logoless).
+        <p><b>Reminder:</p>
+   Give credits or tag me if you
+use my scenes. Thanks and enjoy :D
+    </div>
+    <a class="moo-btn" href="https://mega.nz/folder/O1xmRJLT#--m8sJFcj1jm_o_hYmNKUQ">Go To Scenepack</a>
+     <p style="margin-top: 15px;">By Stack.Aep on Tiktok</p>
+ </div>
+</div>
+<script>
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+const simbolos = ["☆", "★", "♫", "⚛", "✡", "✞"];
+
+function explosion(x, y) {
+    const cantidad = Math.floor(6 + Math.random() * 5);
+    for (let i = 0; i < cantidad; i++) crearEstrella(x, y);
+}
+
+function crearEstrella(x, y) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+
+    const container = document.getElementById("star-container");
+    container.appendChild(star);
+
+    const size = 45;
+
+    let posX = clamp(x, 0, window.innerWidth - size);
+    let posY = clamp(y, 0, window.innerHeight - size);
+
+    star.style.left = posX + "px";
+    star.style.top = posY + "px";
+
+    star.style.opacity = 0;
+
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 2 + Math.random() * 4;
+
+    let vx = Math.cos(angle) * speed;
+    let vy = Math.sin(angle) * speed;
+
+    let rotation = Math.random() * 360;
+    let rotationSpeed = (Math.random() - 0.5) * 10;
+
+    let life = 300; 
+    let hue = Math.floor(Math.random() * 360);
+
+    function animar() {
+        if (life <= 0) {
+            star.remove();
+            return;
+        }
+
+        posX = clamp(posX + vx, 0, window.innerWidth - size);
+        posY = clamp(posY + vy, 0, window.innerHeight - size);
+
+        rotation += rotationSpeed;
+        hue = (hue + 2) % 360;
+
+        const color = `hsl(${hue}, 100%, 60%)`;
+
+        star.style.color = color;
+        star.style.textShadow = `
+            0 0 6px ${color},
+            0 0 12px ${color},
+            0 0 20px ${color}
+        `;
+        let fadeIn = Math.min((300 - life) / 40, 1); 
+        let fadeOut = life / 300; 
+        star.style.opacity = Math.min(fadeIn, fadeOut);
+
+        star.style.left = posX + "px";
+        star.style.top = posY + "px";
+        star.style.transform = `rotate(${rotation}deg)`;
+
+        life--;
+        requestAnimationFrame(animar);
+    }
+
+    animar();
+}
+document.addEventListener("click", (e) => {
+    explosion(e.clientX, e.clientY);
+});
+
+setInterval(() => {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    explosion(x, y);
+}, 3000);
+
+window.addEventListener('load', () => {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('contentpage').style.display = 'block';
+});
+
+</script>
+
+</body>
+</html>
+
